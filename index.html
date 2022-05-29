@@ -23,12 +23,68 @@
 	    To find your table, answer one of the following questions from this <a href = https://sites.google.com/view/teresaandjim/quiz-questions>quiz</a>. <br><br>
 
 	    <input type="text" name="lookupQuestionList" id="lookupQuestionList">
-	    <button onclick="showQuestionsToAnswer()">Lookup Questions</button>  <br> <br>
+	    <button onclick="buttonShowQuestionsToAnswer()">Lookup Questions</button>  <br> <br>
 
 	    <b>Questions</b>: <label id="lblSeatingCode"> [Press button to lookup question list] </label>  <br>
 
-	    <table>
-	      <tr>
+            <table>
+
+	      <tr id = "prob1" style="display: table-row;">
+		<td valign="top"> 1. &nbsp; &nbsp;</td>
+		<td> INSERT_QUESTION
+		  <p align=center>
+		     INSERT IMAGE IF NEEDED
+		  </p>
+		</td>
+	      </tr>
+
+	      <tr id = "prob2" style="display: table-row;">
+		<td valign="top"> 2. &nbsp; &nbsp;</td>
+		<td> INSERT_QUESTION
+		  <p align=center>
+		     INSERT IMAGE IF NEEDED
+		  </p>
+		</td>
+	      </tr>
+
+	      <tr id = "prob3" style="display: table-row;">
+		<td valign="top"> 3. &nbsp; &nbsp;</td>
+		<td> INSERT_QUESTION
+		  <p align=center>
+		     INSERT IMAGE IF NEEDED
+		  </p>
+		</td>
+	      </tr>
+
+
+	      <tr id = "prob4" style="display: table-row;">
+		<td valign="top"> 4. &nbsp; &nbsp;</td>
+		<td> INSERT_QUESTION
+		  <p align=center>
+		     INSERT IMAGE IF NEEDED
+		  </p>
+		</td>
+	      </tr>
+
+	      <tr id = "prob5" style="display: table-row;">
+		<td valign="top"> 5. &nbsp; &nbsp;</td>
+		<td> INSERT_QUESTION
+		  <p align=center>
+		     INSERT IMAGE IF NEEDED
+		  </p>
+		</td>
+	      </tr>
+	      
+	      <tr id = "prob6" style="display: table-row;">
+		<td valign="top"> 6. &nbsp; &nbsp;</td>
+		<td> INSERT_QUESTION
+		  <p align=center>
+		     INSERT IMAGE IF NEEDED
+		  </p>
+		</td>
+	      </tr>
+	      
+	      <tr id = "prob7" style="display: table-row;">
 		<td valign="top"> 7. &nbsp; &nbsp;</td>
 		<td> Jim has programmed an observer drone to fly back and forth to gather information on the movements of the nearby Terran garrison.   It turns out that the farthest distance that his observer traveled from his home base is given by the expression
 
@@ -40,7 +96,7 @@
 	      </tr>
 
 
-	      <tr>
+	      <tr id = "prob8" style="display: table-row;">	      
 		<td valign="top"> 8. &nbsp; &nbsp;</td>
 		<td>
                   The following equation has two solutions for the value of <i>x</i>.  
@@ -50,34 +106,92 @@
                   What is the larger of the two solutions?		  
 		</td>
 	      </tr>
-            </table>
+
+	      <tr id = "prob9" style="display: table-row;">
+		<td valign="top"> 9. &nbsp; &nbsp;</td>
+		<td> INSERT_QUESTION
+		  <p align=center>
+		     INSERT IMAGE IF NEEDED
+		  </p>
+		</td>
+	      </tr>
+
+	      <tr id = "prob10" style="display: table-row;">
+		<td valign="top"> 10. &nbsp; &nbsp;</td>
+		<td> INSERT_QUESTION
+		  <p align=center>
+		     INSERT IMAGE IF NEEDED
+		  </p>
+		</td>
+	      </tr>
+	      
+       </table>
             <br>
-                Submit your answers on this <a href = https://sites.google.com/view/teresaandjim/table-finder/>table finder form </a>. </br>
-</h1>
-</td>
+            Submit your answers on this <a href = https://sites.google.com/view/teresaandjim/table-finder/>table finder form</a>!
+           </br>
+       </h1>
+       </td>
 </tr>
 </table>
 
-<a href="https://www.codecogs.com" target="_blank"><img src="https://www.codecogs.com/images/poweredbycodecogs.png" border="0" title="CodeCogs - An Open Source Scientific Library" alt="CodeCogs - An Open Source Scientific Library"></a>
+
 
 <script>
+  function showQuestionsToAnswer(updateQuestions) {
+      let code = document.getElementById('lookupQuestionList').value;
+      if ((code != null) && (code != "")) { 
+	  code = code.toUpperCase();
+	  let introLabel = document.getElementById('introLabel');
+	  introLabel.innerText = code;
+	  let questionList = lookupQuestionsFromSeatingCode(code);
+	  let lbl = document.getElementById('lblSeatingCode');
+	  lbl.innerText = questionList;
 
-  function showQuestionsToAnswer() {
-      let code = document.getElementById('lookupQuestionList').value.toUpperCase();           let introLabel = document.getElementById('introLabel');
-      introLabel.innerText = code;
-      let questionList = lookupQuestionsFromSeatingCode(code);
-      let lbl = document.getElementById('lblSeatingCode');
-      lbl.innerText = questionList;
+	  refreshTableRowsBeingShown(code);
+      } else {
+	  let introLabel = document.getElementById('introLabel');
+	  introLabel.innerText = "[Unknown]";
+      }
+  }
+
+  function refreshTableRowsBeingShown(code) {
+      var lookupObj = codeToQuestionMap.get(code)
+      var qList = null;
+      if (lookupObj != null) {
+	  var qListTmp = codeToQuestionMap.get(code)
+	  if (qListTmp != null) {
+	      qList = qListTmp.questions;
+	  }
+      }
+      for (let qnum = 1; qnum <= 30; qnum++) {
+	  let probString = "prob" + qnum;
+	  let probInfo = document.getElementById(probString);
+	  if (probInfo == null) {
+	      continue;
+	  }
+	  if (qList == null) {
+	      probInfo.style = "display: table-row";
+	  } else if (qList.includes(qnum)) {
+	      probInfo.style = "display: table-row";	      
+	  } else {
+	      probInfo.style = "display: none";	      
+	  }
+      }
   }
   
   function initialShowQuestionsToAnswer() {
-      let code = extractSeatingCodeFromCurrentPageUrl().toUpperCase();
-      let questionListBlock = document.getElementById('lookupQuestionList');
-      document.getElementById('lookupQuestionList').value = code;
-
-      showQuestionsToAnswer();
+      let code = extractSeatingCodeFromCurrentPageUrl();
+      if (code != null) {
+	  code = code.toUpperCase();
+	  let questionListBlock = document.getElementById('lookupQuestionList');
+	  document.getElementById('lookupQuestionList').value = code;
+	  showQuestionsToAnswer(true);
+      }
   }
-  
+
+  function buttonShowQuestionsToAnswer() {
+      showQuestionsToAnswer(true);
+  }
 
   function lookupQuestionsFromSeatingCode(code) {
       if ((code.length > 0) && codeToQuestionMap.has(code)) {
@@ -88,6 +202,19 @@
       }
   }
 
+  function questionMatchesForCode(code, qnum) {
+      if ((code.length > 0) && codeToQuestionMap.has(code)) {
+//	  alert("qnum is " + qnum);
+//          var qList = codeToQuestionMap.get(code).questions;
+//	  alert("Testing code is " + code + ", qlist is " + qList);	  
+	  //	  return qList.includes(qnum);
+	  return false;
+      } else {
+//	  alert("No match...");
+	  return true;	  
+      }
+  }
+  
 
   // Pretty-print the question list.
   function formatQuestionList(qlist) {
@@ -243,6 +370,23 @@
       return obj;
   }
 
+
+  
+  // // Parse the URL parameter
+  // function getParameterByName(name, url) {
+  //     if (!url) url = window.location.href;
+  //     name = name.replace(/[\[\]]/g, "\\$&");
+  //     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+  // 	  results = regex.exec(url);
+  //     if (!results) return null;
+  //     if (!results[2]) return '';
+  //     return decodeURIComponent(results[2].replace(/\+/g, " "));
+  // }
+
+  
+  // Give the parameter a variable name
+  // var seatingCodeForQuestionList = extractSeatingCodeFromCurrentPageUrl();
+  
 </script>
 
 
