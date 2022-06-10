@@ -1,7 +1,7 @@
 
   function showQuestionsToAnswer(updateQuestions) {
       let code = document.getElementById('lookupQuestionList').value;
-      if ((code != null) && (code != "")) { 
+      if ((code != null) && (code != "")) {
 	  code = code.toUpperCase();
 	  let introLabel = document.getElementById('introLabel');
 	  introLabel.innerText = code;
@@ -34,13 +34,13 @@
 	  if (qList == null) {
 	      probInfo.style = "display: table-row";
 	  } else if (qList.includes(qnum)) {
-	      probInfo.style = "display: table-row";	      
+	      probInfo.style = "display: table-row";
 	  } else {
-	      probInfo.style = "display: none";	      
+	      probInfo.style = "display: none";
 	  }
       }
   }
-  
+
   function initialShowQuestionsToAnswer() {
       let code = extractSeatingCodeFromCurrentPageUrl();
       if (code != null) {
@@ -68,15 +68,15 @@
       if ((code.length > 0) && codeToQuestionMap.has(code)) {
 //	  alert("qnum is " + qnum);
 //          var qList = codeToQuestionMap.get(code).questions;
-//	  alert("Testing code is " + code + ", qlist is " + qList);	  
+//	  alert("Testing code is " + code + ", qlist is " + qList);
 	  //	  return qList.includes(qnum);
 	  return false;
       } else {
 //	  alert("No match...");
-	  return true;	  
+	  return true;
       }
   }
-  
+
 
   // Pretty-print the question list.
   function formatQuestionList(qlist) {
@@ -130,12 +130,13 @@ const codeToQuestionMap = new Map([
       ["RLH", { "questions" : [1,  6,  12]}],
       ["RQP", { "questions" : [1,  3,  9]}],
       ["RRQ", { "questions" : [1,  3,  9]}],
+      ["SBN", { "questions" : [2,  6,  8]}],
       ["SJH", { "questions" : [2,  6,  8]}],
       ["SVJ", { "questions" : [7,  16,  19]}],
       ["TFM", { "questions" : [2,  6,  8]}],
       ["TMY", { "questions" : [1,  3,  9]}],
-      ["TYC", { "questions" : [1,  3,  9]}],
-      ["VFV", { "questions" : [1,  3,  10]}],
+      ["TYC", { "questions" : [3,  9, 14]}],
+      ["VFV", { "questions" : [3,  10, 13]}],
       ["VWJ", { "questions" : [4,  11,  15]}],
       ["WJB", { "questions" : [4,  5,  11]}],
       ["WLB", { "questions" : [1,  4,  12]}],
@@ -150,7 +151,7 @@ const codeToQuestionMap = new Map([
       ["ZWS", { "questions" : [1,  3,  9]}],
   ])
 
-  
+
   function extractSeatingCodeFromCurrentPageUrl() {
       let currentUrl =  document.getElementById("CurrentPage").innerHTML = window.location.href;
       return extractSeatingCodeFromUrl(currentUrl);
@@ -240,7 +241,7 @@ const codeToQuestionMap = new Map([
 
 	  codeToQuestionMap.forEach(function(value, code, map) {
 	      var optionName = "OPTION";
-	      
+
 	      var option = document.createElement(optionName);
 
 	      var codeString = code;
@@ -270,7 +271,7 @@ const codeToQuestionMap = new Map([
 		  codeChosenLbl.innerText = selectedCode;
 		  var nextURL = "index.html?seatingCode=" + selectedCode;
 		  setTimeout(function(){
-		      window.location.href=nextURL;		      
+		      window.location.href=nextURL;
 		  }, 200);
 	      } else {
 		  codeChodenLbl.innerText = "Unknown code.  Try again!";
@@ -283,4 +284,3 @@ const codeToQuestionMap = new Map([
 	  //Add the DIV to the container DIV.
 	  dvContainer.appendChild(div);
       };
-
